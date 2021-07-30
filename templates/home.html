@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block content%}
+    <div class="container-fluid w-75 mt-5 card pt-4 pb-2">
+        <h1 class="text-center display-2">Welcome to school equipment managing website</h1>
+        {% if 'logged_in' not in session %}<h2 class="text-center font-weight-bold">You have to <a id="login" href="{{ url_for('login') }}">login</a> to see the list of equipments</h2>{% endif %}
+    </div>
+{% endblock %}

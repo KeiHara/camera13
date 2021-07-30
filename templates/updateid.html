@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content%}
+    <div class="container-fluid mt-5 card pt-4 pb-2" style="width:467px;">
+        <form method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="userid" value="{{user.id}}" />
+            <!-- form -->
+            <label>Username:</label>
+            <div class="form-group input-group">
+                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
+                <input type="hidden" name="id" value="{{user.id}}">
+                <input type="text" class="form-control" name="username" value="{{user.username}}" required minlength="2"> <!-- validation -->
+            </div>
+            <label>Email:</label>
+            <div class="form-group input-group">
+                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-envelope"></i></span></div>
+                <input type="email" class="form-control" name="email" value="{{user.email}}" required minlength="2">  <!-- validation -->
+            </div>
+            <label>Role:</label>
+            <div class="form-group input-group">
+                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-arrow-down"></i></span></div>
+                <select class="custom-select" name="roleid" required>
+                    <option selected value="">Open this select menu</option>
+                    {% for role in roles %}
+                    <option value="{{role.RoleId}}">{{role.RoleName}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-user-edit"></i>  Update</button>
+        </form>
+    </div>
+        {% endblock %}

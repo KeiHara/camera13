@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content%}
+    <div class="container-fluid mt-5 card pt-4 pb-2" style="width:467px;">
+        <form method="POST" enctype="multipart/form-data">
+            <label>Email:</label>
+            <div class="form-group input-group">
+                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-envelope"></i></span></div>
+                <input type="email" class="form-control" name="email" placeholder="Enter email" required> <!-- validation -->
+            </div>
+            <label>Username:</label>
+            <div class="form-group input-group">
+                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
+                <input type="text" class="form-control" name="username" placeholder="Enter Username" required> <!-- validation -->
+            </div>
+            <label>Password:</label>
+            <div class="form-group input-group">
+                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-key"></i></span></div>
+                <input type="password" class="form-control" name="password" placeholder="Enter password" required> <!-- validation -->
+            </div>
+            <label>Confirm Password:</label>
+            <div class="form-group input-group">
+                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-key"></i></span></div>
+                <input type="password" class="form-control" name="password" placeholder="Confirm password" required> <!-- validation -->
+            </div>
+            <button type="submit" class="btn btn-primary mb-3"><i class="fas fa-user-plus"></i>  Sign Up</button>
+        </form>
+    </div>
+        {% endblock %}

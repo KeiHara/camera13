@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block content%}
+<div class="container-fluid w-75 mt-5 card pt-4 pb-2">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <!--Resource Table-->
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Resource Name</th>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Purchase Date</th>
+                    <th scope="col">Condition</th>
+                    <th scope="col">Original Price</th>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Actions</th>
+                    {% if 'role' in session and session['role'] != 1 %}
+                    <th scope="col">Owned by</th>
+                    <th scope="col">Date borrowed</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for resource in resources %}
+                <tr>
+                    <td style="font-weight: bold;" class="align-middle text-center">{{loop.index}}</td>
+                    <td style="font-weight: bold;" class="align-middle text-center">{{resource.ResourceTypeName}}</td>
+                    <td style="font-weight: bold;" class="align-middle text-center">{{resource.Model}}</td>
+                    <td style="font-weight: bold;" class="align-middle text-center">{{resource.Brand}}</td>
+                    <td style="font-weight: bold;" class="align-middle text-center">{{resource.PurchaseDate}}</td>
+                    <td style="font-weight: bold;" class="align-middle text-center">{{resource.Condition}}</td>
+                    <td style="font-weight: bold;" class="align-middle text-center">{{resource.OriginalPrice}}$</td>
+                    <td style="font-weight: bold;" class="align-middle text-center">
+                        {% if resource.Image == "" %}
+                        No Image
+                        {% else %}
+                        <a href="static/images/{{resource.Image}}" data-toggle="lightbox" data-max-width="1200" data-title="{{resource.Brand}} - {{resource.Model}}"><img class="Image shadow-sm" height="100" src="static/images/{{resource.Image}}"></a>
+                        {% endif %}
+                    </td>
+                    <td class="align-middle text-center">
+                        <div class="d-flex">
+                            {% if 'role' in session and session['role'] != 1 %}
+                            <a href="/update?ResourceId={{resource.ResourceId}}" class="btn btn-warning btn-lg m-1"><i class="fas fa-edit"></i>  Edit</a>
+                            <a href="/delete?ResourceId={{resource.ResourceId}}" class="btn btn-danger btn-lg m-1"><i class="fas fa-trash-alt"></i> Delete</a>
+                            {% endif %}
+                            {% if resource.Claimed == 0 %}<a href="/claim?ResourceId={{resource.ResourceId}}" class="btn btn-success btn-lg m-1"><i class="fas fa-download"></i>  Claim</a>
+                            {% elif resource.ClaimedBy   == session['id'] %}<a href="/unclaim?ResourceId={{resource.ResourceId}}" class="btn btn-success btn-lg m-1" name="return" value="list"><i class="fas fa-undo-alt"></i>  Return</a>
+                            {% else %}<a class="btn btn-success btn-lg disabled text-white m-1"><i class="fas fa-download"></i>  Owned</a>{% endif %}
+                        </div>
+                    </td>
+                    {% if 'role' in session and session['role'] != 1 %}
+                    <td style="font-weight: bold;" class="align-middle text-center">{% if resource.Claimed == 1 %}{{usernames.username}}{% else %} No one {% endif %}</td>
+                    <td style="font-weight: bold;" class="align-middle text-center">{{resource.DateClaimed}}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            <tbody>
+        </table>
+    </div>
+</div>
+    {% endblock %}

@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content%}
+    <div class="container-fluid w-75 mt-5 card pt-4 pb-2">
+        <table class="table table-bordered">
+            <!--Camera Table-->
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">email</th>
+                    <th scope="col">Role</th>
+                    {% if 'role' in session and session['role'] == 3 %}
+                    <th scope="col">actions</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    {% if user.id != 0 %}
+                    <td style="font-weight: bold;" class="align-middle text-center">{{loop.index}}</td>
+                    <td style="font-weight: bold;" class="align-middle text-center">{{user.username}}</td>
+                    <td style="font-weight: bold;" class="align-middle text-center">{{user.email}}</td>
+                    <td style="font-weight: bold;" class="align-middle text-center">{{user.RoleName}}</td>
+                    {% if 'role' in session and session['role'] == 3 %}
+                    <td class="align-middle text-center">
+                        <a href="/updateid?id={{user.id}}" class="btn btn-warning btn-lg"><i class="fas fa-user-edit"></i> Edit</a>
+                        {% if user.id != session['id'] %}<a href="/deleteid?id={{user.id}}" class="btn btn-danger btn-lg"><i class="fas fa-trash-alt"></i>  Delete</a>{% endif %}
+                        <form method="POST" style="display:inline-block;">
+                            <input type="hidden" name="UserId" value="{{user.id}}" />
+                            <input type="hidden" name="ResetPass" id="pass" value="" />
+                            <a href="/resetpass?id={{user.id}}" class="btn btn-info btn-lg m-1"><i class="fas fa-exchange-alt"></i>  Reset Password</a>
+                        </form>
+                    </td>
+                    {% endif %}
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            <tbody>
+        </table>
+    </div>
+        {% endblock %}

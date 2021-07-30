@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container-fluid w-25 mt-5 card pt-4 pb-2" style="width:467px;">
+        <h2>Are you sure you want to delete this resource</h2>
+        <h2>
+        {{resource.Model}}
+        -
+        {{resource.Brand}}
+        </h2>
+        <hr />
+        <form method="post">
+            <!--delete form confirmation-->
+            <input type="hidden" name="ResourceId" value="{{resource.ResourceId}}" />
+            {% if resource.Image != "" %}
+            <a href="static/images/{{resource.Image}}" data-toggle="lightbox" data-max-width="1200" data-title="{{resource.Brand}} - {{resource.Model}}"><img class="Image shadow-lg" height="100" src="static/images/{{resource.Image}}"></a>
+            {% endif %}
+            <input class="btn btn-danger btn-xs" type="submit" />
+            <a class="btn btn-warning btn-xs" href="{{url_for('list')}}">Cancel</a>
+        </form>
+    </div>
+        {% endblock %}
+

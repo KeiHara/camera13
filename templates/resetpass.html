@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content%}
+<div class="container-fluid mt-5 card pt-4 pb-4" style="width:467px;">
+    <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>Reset Password:</label>
+            <input type="password" class="form-control" name="resetpass" placeholder="Enter New Password" required minlength="2"> <!-- validation -->
+        </div>
+        <button type="submit" class="btn btn-primary mb-3"><i class="fas fa-exchange-alt"></i>  Change</button>
+    </form>
+</div>
+        {% endblock %}

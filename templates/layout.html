@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>Pak Colloge Resources</title>
+    {% endif %}
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- own css -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
+    <link rel="stylesheet" type="text/css" href="/static/icomoon/style.css" />
+
+</head>
+<body class="rainbow">
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light pt-0 pb-0">
+        <a class="navbar-brand" href="{{ url_for('home') }}"><img src="https://www.pakuranga.school.nz/wp-content/uploads/2015/03/logo-footer.png" height="60"></a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% if 'logged_in' in session and session['role'] == 1 %}
+                <li class="nav-item {% if request.endpoint == 'list' %} active-link {% endif %}">
+                    <a class="nav-link" href="{{ url_for('list') }}">Equipments</a>
+                    <div class="underline"></div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    <div class="underline"></div>
+                </li>
+                {% elif 'role' in session and session['role'] != 1 %}
+                <li class="nav-item dropdown {% if request.endpoint == 'create' or request.endpoint == 'list' %} active-link {% endif %}">
+                    <a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">Equipments</a>
+                    <div class="underline"></div>
+                    <div class="dropdown-menu bg-light  p-0 bg-light fade-up">
+                        <a class="dropdown-item pt-3 pb-3" href="{{ url_for('list') }}">List</a>
+                        <a class="dropdown-item pt-3 pb-3" href="{{ url_for('create') }}">Create</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown {% if request.endpoint == 'resourcetype' or request.endpoint == 'addresource' %} active-link {% endif %}">
+                    <a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">Equipment Type</a>
+                    <div class="underline"></div>
+                    <div class="dropdown-menu bg-light p-0 bg-light fade-up">
+                        <a class="dropdown-item pt-3 pb-3" href="{{ url_for('resourcetype') }}">List</a>
+                        <a class="dropdown-item pt-3 pb-3" href="{{ url_for('addresource') }}">Create</a>
+                    </div>
+                </li>
+                <li class="nav-item {% if request.endpoint == 'user' %} active-link {% endif %}">
+                    <a class="nav-link" href="{{ url_for('user') }}">Users</a>
+                    <div class="underline"></div>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    <div class="underline"></div>
+                </li>
+                {% endif %}
+                {% if 'logged_in' not in session %}
+                <li class="nav-item {% if request.endpoint == 'home' %} active-link {% endif %}">
+                    <a class="nav-link" href="{{ url_for('home') }}">home</a>
+                    <div class="underline"></div>
+                </li>
+                <li class="nav-item {% if request.endpoint == 'login' %} active-link {% endif %}">
+                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    <div class="underline"></div>
+                </li>
+                <li class="nav-item {% if request.endpoint == 'signup' %} active-link {% endif %}">
+                    <a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a>
+                    <div class="underline"></div>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if 'logged_in' in session %}
+                <li class="nav-item {% if request.endpoint == 'profile' %} active-link {% endif %}">
+                    <a class="nav-link" href="/profile?userid={{session['id']}}">Profile</a>
+                    <div class="underline"></div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">Logged in as : {{session['username']}}</a>
+                    <div class="underline"></div>
+                </li>
+                {% endif %}
+            </ul>
+
+        </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <!-- Do something with the message -->
+    <div class="{{ category }} flash mt-3 w-75" role="alert">
+        <p class="float-left">{{ message }}</p>
+        <p class="float-right">Click to hide<p>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% block content %}
+    {% endblock %}
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"></script>
+    <script type="text/javascript" src="https://kit.fontawesome.com/0130e2205b.js" crossorigin="anonymous"></script>
+    <script>
+        $('.custom-file-input').change(function (e) { //gets run everything the file uploaded changes
+            var fileName = $(this)[0].files[0].name;
+            var nextSibling = e.target.nextElementSibling
+            nextSibling.innerText = fileName //set bootstrap form input name to filename
+        });
+        $(document).on('click', '[data-toggle="lightbox"]', function (event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
+        });
+        $('.flash').click(function () {
+            $('.flash').hide();
+            // OR $('div.toshow').show(2200);
+            // OR $('div.toshow').slideDown("slow");
+        });
+    </script>
+</body>
+</html>

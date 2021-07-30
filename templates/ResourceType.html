@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content%}
+    <div class="container-fluid w-75 mt-5 card pt-4 pb-2">
+        <table class="table align-middle table-bordered">
+            <!--Camera Table-->
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Resource Type</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resourcetype in resourcetypes %}
+                <tr>
+                    <td style="font-weight: bold;" class="align-middle text-center">{{loop.index}}</td>
+                    <td style="font-weight: bold;" class="align-middle text-center">{{resourcetype.ResourceTypeName}}</td>
+                    <td class="align-middle text-center">
+                        <form method="POST">
+                            <!--delete form confirmation-->
+                            <input type="hidden" name="ResourceTypeId" value="{{resourcetype.ResourceTypeId}}"/>
+                            <input class="btn btn-danger btn-lg" onclick="clicked(event)" type="submit" value="Delete" />
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            <tbody>
+        </table>
+        <script>
+            function clicked(e) {
+                if (!confirm('Are you sure?')) {
+                    e.preventDefault();
+                }
+            }
+        </script>
+    </div>
+        {% endblock %}

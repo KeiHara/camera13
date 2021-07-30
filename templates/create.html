@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content%}
+    <div class="container-fluid w-75 mt-5 card pt-4 pb-2">
+        <form method="POST" enctype="multipart/form-data">
+            <!-- form -->
+            <label>Resource Type:</label>
+            <div class="form-group input-group">
+                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-arrow-down"></i></span></div>
+                <select class="custom-select" name="ResourceType" required>
+                    <option value="" selected>Open this select menu</option>
+                    {% for resourcetype in resourcetypes %}
+                    <option value="{{resourcetype.ResourceTypeId}}">{{resourcetype.ResourceTypeName}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <label>Brand:</label>
+            <div class="form-group input-group">
+                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-tags fa-rotate-90"></i> </span></div>
+                <input type="text" class="form-control" name="Brand" placeholder="Enter Brand name" required minlength="2" maxlength="20"> <!-- validation -->
+            </div>
+            <label>Model:</label>
+            <div class="form-group input-group">
+                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-file-signature"></i></span></div>
+                <input type="text" class="form-control" name="Model" placeholder="Enter Model name" required minlength="2" maxlength="20"> <!-- validation -->
+            </div>
+            <label>Purchase Date:</label>
+            <div class="form-group input-group">
+                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-calendar-alt"></i></span></div>
+                <input type="date" class="form-control" name="Purchase" placeholder="Enter purchase date" required minlength="8">   <!-- validation -->
+            </div>
+            <label>Condition:</label>
+            <div class="form-group input-group">
+                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-thumbs-up"></i></span></div>
+                <input type="text" class="form-control" name="Condition" placeholder="Enter Condition" required minlength="2" maxlength="20">  <!-- validation -->
+            </div>
+            <label>Picture:</label>
+            <div class="form-group input-group">
+                <!-- form for image -->
+                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-image"></i></span></div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="Picture" accept="image/*" capture>
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+            </div>
+            <label>Original Price:</label>
+            <div class="form-group input-group">
+                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-dollar-sign"></i></span></div>
+                <input type="number" class="form-control" name="Price" placeholder="Enter original price($)" min="0" required > <!-- validation -->
+            </div>
+            <button type="submit" class="btn btn-primary mb-3"><i class="fas fa-plus-circle"></i>  Create</button>
+        </form>
+    </div>
+        {% endblock %}

@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block content%}
+    <div class="container-fluid w-75 mt-5 card pt-4 pb-2">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight: bold;" class="align-middle text-center">{{user.id}}</td>
+                        <td style="font-weight: bold;" class="align-middle text-center">{{user.username}}</td>
+                        <td style="font-weight: bold;" class="align-middle text-center">
+                            <a href="/resetpass?id={{user.id}}" class="btn btn-info btn-lg m-1"><i class="fas fa-exchange-alt"></i>  Reset Password</a>
+                        </td>
+                        <td style="font-weight: bold;" class="align-middle text-center">{{user.RoleName}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-center" style="font-weight: bold;">Equipment that you are currently borrowing</p>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Resource Id</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Picture</th>
+                        <th scope="col">Since</th>
+                        <th scope="col">Return</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if resources|length %}
+                    {% for resource in resources %}
+                    <tr>
+                        <td style="font-weight: bold;" class="align-middle text-center">{{resource.ResourceId}}</td>
+                        <td style="font-weight: bold;" class="align-middle text-center">{{resource.Brand}}</td>
+                        <td style="font-weight: bold;" class="align-middle text-center">{{resource.Model}}</td>
+                        <td style="font-weight: bold;" class="align-middle text-center">
+                            {% if resource.Image == "" %}
+                            No Image
+                            {% else %}
+                            <a href="static/images/{{resource.Image}}" data-toggle="lightbox" data-max-width="1200" data-title="{{resource.Brand}} - {{resource.Model}}"><img class="Image shadow-lg" height="100" src="static/images/{{resource.Image}}"></a>
+                            {% endif %}
+                        </td>
+                        <td style="font-weight: bold;" class="align-middle text-center">{{resource.LogTime}}</td>
+                        <td style="font-weight: bold;" class="align-middle text-center"><a href="/unclaim?ResourceId={{resource.ResourceId}}" class="btn btn-success btn-lg">Return</a></td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td style="font-weight: bold;" class="align-middle text-center" colspan="6">You don't own any equipment</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% endblock %}
